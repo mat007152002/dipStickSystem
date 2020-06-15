@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		531CCD52F621D3AFC6377449 /* Pods_dipStickSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93FED15C04644A7358A2E289 /* Pods_dipStickSystem.framework */; };
 		DDA2DB552497162900E5AFAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2DB542497162900E5AFAC /* AppDelegate.swift */; };
 		DDA2DB572497162900E5AFAC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2DB562497162900E5AFAC /* SceneDelegate.swift */; };
 		DDA2DB592497162900E5AFAC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2DB582497162900E5AFAC /* ViewController.swift */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DBFE1AB047486B405434D54 /* Pods-dipStickSystem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dipStickSystem.debug.xcconfig"; path = "Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem.debug.xcconfig"; sourceTree = "<group>"; };
+		93FED15C04644A7358A2E289 /* Pods_dipStickSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dipStickSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA2DB512497162900E5AFAC /* dipStickSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dipStickSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA2DB542497162900E5AFAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDA2DB562497162900E5AFAC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		DDA2DB5D2497162B00E5AFAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDA2DB602497162B00E5AFAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDA2DB622497162B00E5AFAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F059A4916588787F55F9EF08 /* Pods-dipStickSystem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dipStickSystem.release.xcconfig"; path = "Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				531CCD52F621D3AFC6377449 /* Pods_dipStickSystem.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		609EE75927B720E441B16757 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				93FED15C04644A7358A2E289 /* Pods_dipStickSystem.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B3BF16C1338A7BFC7537F847 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1DBFE1AB047486B405434D54 /* Pods-dipStickSystem.debug.xcconfig */,
+				F059A4916588787F55F9EF08 /* Pods-dipStickSystem.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DDA2DB482497162900E5AFAC = {
 			isa = PBXGroup;
 			children = (
 				DDA2DB532497162900E5AFAC /* dipStickSystem */,
 				DDA2DB522497162900E5AFAC /* Products */,
+				B3BF16C1338A7BFC7537F847 /* Pods */,
+				609EE75927B720E441B16757 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DDA2DB652497162B00E5AFAC /* Build configuration list for PBXNativeTarget "dipStickSystem" */;
 			buildPhases = (
+				9E0549C7C11EE09BD1FE9292 /* [CP] Check Pods Manifest.lock */,
 				DDA2DB4D2497162900E5AFAC /* Sources */,
 				DDA2DB4E2497162900E5AFAC /* Frameworks */,
 				DDA2DB4F2497162900E5AFAC /* Resources */,
+				3AA343BEB1BF988339353BCB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3AA343BEB1BF988339353BCB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E0549C7C11EE09BD1FE9292 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-dipStickSystem-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DDA2DB4D2497162900E5AFAC /* Sources */ = {
@@ -282,6 +351,7 @@
 		};
 		DDA2DB662497162B00E5AFAC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DBFE1AB047486B405434D54 /* Pods-dipStickSystem.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +370,7 @@
 		};
 		DDA2DB672497162B00E5AFAC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F059A4916588787F55F9EF08 /* Pods-dipStickSystem.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
