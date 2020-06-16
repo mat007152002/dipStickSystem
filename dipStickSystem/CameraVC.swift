@@ -192,8 +192,8 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         var photoSettings: AVCapturePhotoSettings
         
         photoSettings = AVCapturePhotoSettings.init(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-        photoSettings.isAutoStillImageStabilizationEnabled = true
-        photoSettings.flashMode = .auto
+//        photoSettings.isAutoStillImageStabilizationEnabled = true
+//        photoSettings.flashMode = .auto
         
         // AVCapturePhotoCaptureDelegate
         stillImageOutput.capturePhoto(with: photoSettings, delegate: self)
