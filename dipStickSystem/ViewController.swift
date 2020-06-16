@@ -23,45 +23,46 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        getImage()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func getPic(_ sender: Any) {
-        getImageFromCamera()
-    }
-    
-    func getImageFromCamera(){
-            let imagePicker = UIImagePickerController()
-            
-            if UIImagePickerController.isSourceTypeAvailable(.camera)
-            {
-                imagePicker.sourceType = .camera
-                
-                if UIImagePickerController.isCameraDeviceAvailable(.rear)
-                {
-                    imagePicker.cameraDevice = .rear
-                }
-            }
-            else
-            {
-                imagePicker.sourceType = .photoLibrary
-            }
-            
-            imagePicker.delegate = self
-            
-            self.present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @IBAction func buttonTapped(_ sender: UIButton) {
+//    @IBAction func getPic(_ sender: Any) {
+//        getImageFromCamera()
+//    }
+//
+//    func getImageFromCamera(){
+//            let imagePicker = UIImagePickerController()
+//
+//            if UIImagePickerController.isSourceTypeAvailable(.camera)
+//            {
+//                imagePicker.sourceType = .camera
+//
+//                if UIImagePickerController.isCameraDeviceAvailable(.rear)
+//                {
+//                    imagePicker.cameraDevice = .rear
+//                }
+//            }
+//            else
+//            {
+//                imagePicker.sourceType = .photoLibrary
+//            }
+//
+//            imagePicker.delegate = self
+//
+//            self.present(imagePicker, animated: true, completion: nil)
+//    }
+//
+//    @IBAction func buttonTapped(_ sender: UIButton) {
 //        let picker = UIImagePickerController()
 //        picker.delegate = self
 //        picker.sourceType = .photoLibrary
 //        present(picker, animated: true, completion: nil)
-        getImage()
-    }
+//
+//    }
     
     func getImage(){
         

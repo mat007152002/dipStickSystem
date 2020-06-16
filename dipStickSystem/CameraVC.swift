@@ -200,7 +200,7 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func savePhotoPressed(_ sender: Any) {
-        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+//        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
         
