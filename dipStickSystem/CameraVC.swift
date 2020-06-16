@@ -98,8 +98,8 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         let edgeInsets:UIEdgeInsets = UIEdgeInsets.init(top: 22, left: 22, bottom: 22, right: 22)
         
         let resizableImage = (UIImage(named: "guideImage")?.resizableImage(withCapInsets: edgeInsets, resizingMode: .stretch))!
-        let imageSize = CGSize(width: previewView.frame.size.width-50, height: 200)
-        cropImageRectCorner = [.allCorners]
+        let imageSize = CGSize(width: 30 /*previewView.frame.size.width-200*/, height: 30)
+        //cropImageRectCorner = [.allCorners]
         
         let imageView = UIImageView(image: resizableImage)
         imageView.frame.size = imageSize
@@ -200,31 +200,32 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     @IBAction func savePhotoPressed(_ sender: Any) {
-//        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
         
         VC.image = croppedImageView.image!
         
-        self.navigationController?.pushViewController(VC, animated: true)//puch to DetailViewController
+        self.navigationController?.pushViewController(VC, animated: true)//puch to ViewController
+        
+        //        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil) //目前沒用到儲存功能
     }
     
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            
-            let alertController = UIAlertController(title: "Save Error", message: error.localizedDescription, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction!) in
-                self.previewViewLayerMode(image: nil, isCameraMode: true)
-            }))
-            present(alertController, animated: true)
-        } else {
-            let alertController = UIAlertController(title: "Saved", message: "Captured guided image saved successfully.", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction!) in
-                self.previewViewLayerMode(image: nil, isCameraMode: true)
-            }))
-            present(alertController, animated: true)
-        }
-    }
+//    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+//        if let error = error {
+//
+//            let alertController = UIAlertController(title: "Save Error", message: error.localizedDescription, preferredStyle: .alert)
+//            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction!) in
+//                self.previewViewLayerMode(image: nil, isCameraMode: true)
+//            }))
+//            present(alertController, animated: true)
+//        } else {
+//            let alertController = UIAlertController(title: "Saved", message: "Captured guided image saved successfully.", preferredStyle: .alert)
+//            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert: UIAlertAction!) in
+//                self.previewViewLayerMode(image: nil, isCameraMode: true)
+//            }))
+//            present(alertController, animated: true)
+//        }
+//    } //目前沒用到儲存功能
     
     @IBAction func cancelPhotoPressed(_ sender: Any) {
         

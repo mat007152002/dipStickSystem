@@ -68,9 +68,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ghl-sp-pq9">
-                                        <rect key="frame" x="82" y="72" width="32" height="30"/>
+                                        <rect key="frame" x="66" y="72" width="65" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="save"/>
+                                        <state key="normal" title="get result"/>
                                         <connections>
                                             <action selector="savePhotoPressed:" destination="R64-7h-rrH" eventType="touchUpInside" id="Kfy-TQ-iKm"/>
                                         </connections>
