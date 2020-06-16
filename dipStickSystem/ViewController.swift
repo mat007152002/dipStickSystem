@@ -10,6 +10,8 @@ import UIKit
 import ColorThiefSwift
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var image: UIImage?
 
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -63,7 +65,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func getImage(){
         
-        guard let testimage = UIImage(named: "testPic") else { return }//到時候要改寫成從相機取得色塊
+        guard let testimage = image else { return }//到時候要改寫成從相機取得色塊
         imageView.image = testimage
 
         DispatchQueue.global(qos: .default).async {

@@ -22,8 +22,10 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>this app needs to take photo</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>this app needs to use your photo and save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>this app needs to use your photo</string>
+	<string>this app needs to use your photo and save photos</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -52,11 +54,7 @@
 		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<array/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
