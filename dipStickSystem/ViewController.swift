@@ -27,7 +27,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    @IBAction func getPic(_ sender: Any) {
+        getImageFromCamera()
+    }
+    
+    func getImageFromCamera(){
+            let imagePicker = UIImagePickerController()
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera)
+            {
+                imagePicker.sourceType = .camera
+                
+                if UIImagePickerController.isCameraDeviceAvailable(.rear)
+                {
+                    imagePicker.cameraDevice = .rear
+                }
+            }
+            else
+            {
+                imagePicker.sourceType = .photoLibrary
+            }
+            
+            imagePicker.delegate = self
+            
+            self.present(imagePicker, animated: true, completion: nil)
+    }
+    
     @IBAction func buttonTapped(_ sender: UIButton) {
 //        let picker = UIImagePickerController()
 //        picker.delegate = self
@@ -37,18 +62,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func getImage(){
-        let testimage = UIImage(named: "testPic")//到時候要改寫成從相機取得色塊
+        
+        guard let testimage = UIImage(named: "testPic") else { return }//到時候要改寫成從相機取得色塊
+        imageView.image = testimage
 
         DispatchQueue.global(qos: .default).async {
-            guard let colors = ColorThief.getPalette(from: testimage!/*image*/, colorCount: 7, quality: 10, ignoreWhite: true) else {
+            
+            guard let colors = ColorThief.getPalette(from: testimage, colorCount: 7, quality: 10, ignoreWhite: true) else {
                 return
             }
+            
             let start = Date()
-            guard let dominantColor = ColorThief.getColor(from: testimage!/*image*/) else {
+            
+            guard let dominantColor = ColorThief.getColor(from: testimage) else {
                 return
             }
+            
             let elapsed = -start.timeIntervalSinceNow
             NSLog("time for getColorFromImage: \(Int(elapsed * 1000.0))ms")
+            
             DispatchQueue.main.async { [weak self] in
                 for i in 0 ..< 6 {
                     if i < colors.count {
@@ -64,7 +96,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self?.colorLabel.text = "getColor R\(dominantColor.r) G\(dominantColor.g) B\(dominantColor.b)"
             }
         }
-    }
+   }
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
@@ -72,15 +105,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else { return }
         imageView.image = image
-    
-        let testimage = UIImage(named: "testPic")
 
         DispatchQueue.global(qos: .default).async {
-            guard let colors = ColorThief.getPalette(from: testimage!/*image*/, colorCount: 7, quality: 10, ignoreWhite: true) else {
+            guard let colors = ColorThief.getPalette(from: image, colorCount: 7, quality: 10, ignoreWhite: true) else {
                 return
             }
             let start = Date()
-            guard let dominantColor = ColorThief.getColor(from: testimage!/*image*/) else {
+            guard let dominantColor = ColorThief.getColor(from: image) else {
                 return
             }
             let elapsed = -start.timeIntervalSinceNow
