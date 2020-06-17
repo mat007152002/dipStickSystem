@@ -73,7 +73,9 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
+        previewViewLayerMode(image: nil, isCameraMode: true)
     }
+    
     
     func setupCameraPreview() {
         
