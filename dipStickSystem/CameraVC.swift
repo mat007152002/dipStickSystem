@@ -100,7 +100,7 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         let edgeInsets:UIEdgeInsets = UIEdgeInsets.init(top: 22, left: 22, bottom: 22, right: 22)
         
         let resizableImage = (UIImage(named: "guideImage")?.resizableImage(withCapInsets: edgeInsets, resizingMode: .stretch))!
-        let imageSize = CGSize(width: 30 /*previewView.frame.size.width-200*/, height: 30)
+        let imageSize = CGSize(width: 30, height: 30)//決定瞄準框的長寬高
         //cropImageRectCorner = [.allCorners]
         
         let imageView = UIImageView(image: resizableImage)
