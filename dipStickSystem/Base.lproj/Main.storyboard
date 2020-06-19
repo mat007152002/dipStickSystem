@@ -244,12 +244,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtT-QC-Nyk" userLabel="Label average">
+                                <rect key="frame" x="127" y="689" width="248" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="dbS-rM-ugH"/>
                     <connections>
+                        <outlet property="averageLabel" destination="wtT-QC-Nyk" id="gLs-Ex-m0N"/>
                         <outlet property="colorLabel" destination="JOJ-3V-aGe" id="NTW-py-rHq"/>
                         <outlet property="colorView" destination="sUA-3d-dyb" id="cwa-G2-Te3"/>
                         <outlet property="imageView" destination="3ZN-Qg-gNA" id="tHj-C0-6IK"/>
