@@ -33,6 +33,7 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     var croppedImageView = UIImageView()
     var cropImageRect = CGRect()
     var cropImageRectCorner = UIRectCorner()
+    var ParentSegmentIndex = 0
     
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
@@ -206,10 +207,18 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
         
         VC.image = croppedImageView.image!
+        VC.segmentIndex = ParentSegmentIndex
         
         self.navigationController?.pushViewController(VC, animated: true)//puch to ViewController
         
         //        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil) //目前沒用到儲存功能
+    }
+    @IBAction func mySegmentControl(_ sender: UISegmentedControl) {
+        if (sender.selectedSegmentIndex == 0){
+            ParentSegmentIndex = 0
+        }else{
+            ParentSegmentIndex = 1
+        }
     }
     
 //    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {

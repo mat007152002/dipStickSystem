@@ -12,6 +12,7 @@ import ColorThiefSwift
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var image: UIImage?
+    var segmentIndex : Int?
 
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -65,13 +66,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                         self?.paletteLabels[i].text = "-"
                     }
                 }
+                
                 self?.colorView.backgroundColor = dominantColor.makeUIColor()
                 self?.colorLabel.text = "getColor R\(dominantColor.r) G\(dominantColor.g) B\(dominantColor.b)"
                 let convertResult = self?.convertInt8ToInt(color: dominantColor)
-                self?.resultLabel.text = self?.getResultNearDesk(numberR: convertResult!.0, numberG: convertResult!.1, numberB: convertResult!.2)
+                self?.resultLabel.text = self?.chooseLogic(logic: self?.segmentIndex ?? 0, NumberR: convertResult!.0, NumberG: convertResult!.1, NumberB: convertResult!.2)
+                    //self?.getResultNearLight(numberR: convertResult!.0, numberG: convertResult!.1, numberB: convertResult!.2)
             }
         }
    }
+    
+    func chooseLogic(logic:Int, NumberR:Int, NumberG:Int, NumberB:Int) -> String {
+        switch logic {
+        case 0:
+            return getLightResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+        case 1:
+            return getDarkResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+        default:
+            return getLightResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+        }
+    }
+
     
 //    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 //        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
@@ -142,7 +157,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return (0, 0, 0)
     }
     
-    func getResultNearDesk(numberR:Int, numberG:Int, numberB:Int) -> String {
+    func getDarkResult(numberR:Int, numberG:Int, numberB:Int) -> String {
         let testR = numberR
         let testG = numberG
         let testB = numberB
@@ -248,7 +263,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return "end"
     }
     
-    func getResultNearLight(numberR:Int, numberG:Int, numberB:Int) -> String {
+    func getLightResult(numberR:Int, numberG:Int, numberB:Int) -> String {
         let testR = numberR
         let testG = numberG
         let testB = numberB
@@ -259,9 +274,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if (testR <= 133 && testR >= 115){
                 //介於115-133之間的需透過G&B判斷是4或5
                 //了解R是115-133時，G的範圍為何
-                if (testG < 50){
+                if (testG < 52){
                     return "4"
-                }else{
+                }else if (testG <= 67 && testG >= 52){
+                    //可能是4V5
+                    if (testB > 91){
+                        return "5"
+                    }else{
+                        return "4"
+                    }
+                }else{ // >67
                     return "5"
                 }
             }else{
@@ -275,7 +297,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             }else if (testR >= 154 && testR <= 174){
                 if (testG < 58){
                     return "3"
-                }else{
+                }else if (testG >= 58 && testG <= 79){
+                    //可能是3V4
+                    if (testB < 100){
+                        return "3"
+                    }else{
+                        return "4"
+                    }
+                }else{ //大於79
                     return "4"
                 }
             }
