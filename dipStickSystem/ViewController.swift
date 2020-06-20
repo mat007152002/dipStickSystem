@@ -82,8 +82,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self?.colorView.backgroundColor = dominantColor.makeUIColor()
                 self?.colorLabel.text = "getColor R\(dominantColor.r) G\(dominantColor.g) B\(dominantColor.b)"
                 //let convertResult = self?.convertInt8ToInt(color: dominantColor)
-                let a = self?.getAverageColor(colors: colors)
-                self?.averageLabel.text = "get Average R\(a?.0 ?? 0) G\(a?.1 ?? 0) B\(a?.2 ?? 0)"
+                let a = self?.getAverageLighterColor(colors: colors)
+                let b = self?.getAverageColor(colors: colors)
+                self?.averageLabel.text = "get Average R\(b?.0 ?? 0) G\(b?.1 ?? 0) B\(b?.2 ?? 0)"
                 self?.resultLabel.text = self?.chooseLogic(logic: self?.segmentIndex ?? 0, NumberR: a!.0, NumberG: a!.1, NumberB: a!.2)
             }
         }
@@ -120,6 +121,54 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             return (numberRI,numberGI,numberBI)
         }
         return (0, 0, 0)
+    }
+    
+    func getAverageLighterColor(colors:[MMCQ.Color]?) -> (NumberR:Int, NumberG:Int, NumberB:Int) {
+        
+        var colorsInt = [(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0)]
+        var colorsIntSum = [0,0,0,0,0,0,0,0,0]
+        var chosenColor = [(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0)]
+        var averageColor = [0, 0, 0]
+        
+        for i in 0 ..< 9 {
+            colorsInt[i] = convertInt8ToInt(color: colors?[i])
+            colorsIntSum[i] = colorsInt[i].0 + colorsInt[i].1 + colorsInt[i].2
+            
+        }
+        
+        let colorsIntSumSorted = colorsIntSum.sorted()
+        //排好的9個顏色總和＆還沒排的9個顏色總和
+        
+        let indexOf1 = colorsIntSum.firstIndex(of: colorsIntSumSorted[2])
+        let indexOf2 = colorsIntSum.firstIndex(of: colorsIntSumSorted[3])
+        let indexOf3 = colorsIntSum.firstIndex(of: colorsIntSumSorted[4])
+        let indexOf4 = colorsIntSum.firstIndex(of: colorsIntSumSorted[5])
+        let indexOf5 = colorsIntSum.firstIndex(of: colorsIntSumSorted[6])
+        
+        chosenColor[0] = colorsInt[indexOf1!]
+        print(chosenColor[0])
+        chosenColor[1] = colorsInt[indexOf2!]
+        print(chosenColor[1])
+        chosenColor[2] = colorsInt[indexOf3!]
+        print(chosenColor[2])
+        chosenColor[3] = colorsInt[indexOf4!]
+        print(chosenColor[3])
+        chosenColor[4] = colorsInt[indexOf5!]
+        print(chosenColor[4])
+        
+        for i in 0 ..< 5 {
+            averageColor[0] = averageColor[0] + chosenColor[i].0
+            averageColor[1] = averageColor[1] + chosenColor[i].1
+            averageColor[2] = averageColor[2] + chosenColor[i].2
+        }
+        
+        let resultR = averageColor[0]/chosenColor.count
+        let resultG = averageColor[1]/chosenColor.count
+        let resultB = averageColor[2]/chosenColor.count
+        
+        print("\(resultR)"+" "+"\(resultG)"+" "+"\(resultB)")
+        
+        return (resultR, resultG, resultB)
     }
     
     func getAverageColor(colors:[MMCQ.Color]?) -> (NumberR:Int, NumberG:Int, NumberB:Int) {
