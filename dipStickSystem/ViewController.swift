@@ -39,9 +39,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func chooseLogic(logic:Int, NumberR:Int, NumberG:Int, NumberB:Int) -> String { //根據環境選擇Light(預設)或Dark
            switch logic {
            case 0:
-               return getLightResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+               return getAverageResult2(numberR: NumberR, numberG: NumberG, numberB: NumberB)
            case 1:
-               return getDarkResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+               return getAverageResult3(numberR: NumberR, numberG: NumberG, numberB: NumberB)
            default:
                return getLightResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
            }
@@ -81,7 +81,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 
                 self?.colorView.backgroundColor = dominantColor.makeUIColor()
                 self?.colorLabel.text = "getColor R\(dominantColor.r) G\(dominantColor.g) B\(dominantColor.b)"
-                let convertResult = self?.convertInt8ToInt(color: dominantColor)
+                //let convertResult = self?.convertInt8ToInt(color: dominantColor)
                 let a = self?.getAverageColor(colors: colors)
                 self?.averageLabel.text = "get Average R\(a?.0 ?? 0) G\(a?.1 ?? 0) B\(a?.2 ?? 0)"
                 self?.resultLabel.text = self?.chooseLogic(logic: self?.segmentIndex ?? 0, NumberR: a!.0, NumberG: a!.1, NumberB: a!.2)
@@ -112,7 +112,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             numberG = "\(Color.g)"
             numberB = "\(Color.b)"
             
-            print(numberR+" "+numberG+" "+numberB)
             let checkResult = check(numberRI: Int(numberR) , numberGI: Int(numberG), numberBI: Int(numberB))
             numberRI = checkResult.0
             numberGI = checkResult.1
@@ -140,6 +139,199 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let resultB = averageColor[2]/colorsInt.count
         
         return (resultR, resultG, resultB)
+    }
+    
+    func getAverageResult3(numberR:Int, numberG:Int, numberB:Int) -> String {
+        let testR = numberR
+        let testG = numberG
+        let testB = numberB
+        
+        if (testR <= 141){
+            //可能是4V5
+            if(testR < 115){
+                return "5"
+            }else{
+                //用TestG看是4V5
+                if (testG < 56){
+                    return "5"
+                }else if (testG >= 56 && testG <= 61){
+                    //可能是4V5
+                    if(testB < 90){
+                        return "4"
+                    }else{
+                        return "5"
+                    }
+                }else{ //大於60
+                    return "5"
+                }
+            }
+        }else if (testR > 141 && testR <= 178){
+            //可能是3V4
+            if (testR < 158){
+                return "4"
+            }else{
+                //可能是3V4
+                if (testG < 74){
+                    return "4"
+                }else if (testG >= 74 && testG <= 93){
+                    if (testB < 110){
+                        return "3"
+                    }else{
+                        return "4"
+                    }
+                }else { //大於93
+                    return "3"
+                }
+            }
+        }else if (testR > 178 && testR < 191){
+            //可能是2V3
+            if (testR < 182){
+                return "3"
+            }else{
+                //可能是2V3
+                if (testG < 86){
+                    return "3"
+                }else if (testR >= 86 && testR <= 89){
+                    //可能是2V3
+                    if (testB < 101){
+                        return "2"
+                    }else {
+                        return "3"
+                    }
+                }else{
+                    return "2"
+                }
+            }
+        }else{ // 大於191
+            //可能是1V2
+            if (testR < 198){
+                return "2"
+            }else if (testR >= 198 && testR <= 214){
+                if (testG < 130){
+                    return "2"
+                }else if(testG >= 130 && testG <= 140){
+                    if (testB < 136){
+                        return "1"
+                    }else{
+                        return "2"
+                    }
+                }else{
+                    return "2"
+                }
+            }else{
+                return "1"
+            }
+        }
+    }
+    
+    func getAverageResult2(numberR:Int, numberG:Int, numberB:Int) -> String {
+        let testR = numberR
+        let testG = numberG
+        let testB = numberB
+        
+        if (testR <= 103){
+            return "5"
+        }else if (testR >= 103 && testR <= 141){
+            return "4"
+        }else if (testR >= 141 && testR <= 185){
+            return "3"
+        }else if (testR >= 185 && testR <= 206){
+            if(testR < 202){
+                return "2"
+            }else{
+                if(testG < 125){
+                    return "2"
+                }else{
+                    return "1"
+                }
+            }
+        }else{
+            return "1"
+        }
+    }
+    
+    func getAverageResult(numberR:Int, numberG:Int, numberB:Int) -> String {
+        let testR = numberR
+        let testG = numberG
+        let testB = numberB
+        
+        if (testR <= 108){
+            //可能是4V5
+            if(testR <= 92){
+                return "5"
+            }else{//>92
+                if(testG < 45){
+                    return "5"
+                }else if(testG >= 45 && testG <= 60){
+                    //可能是4V5，看B
+                    if(testB <= 76){
+                        return "4"
+                    }else{
+                        return "5"
+                    }
+                }else{//大於60
+                    return "5"
+                }
+            }
+        }else if (testR > 108 && testR <= 140){
+            //可能是3V4
+            if(testR < 124){
+                return "4"
+            }else{ // 124-140
+                if (testG < 64) {
+                    return "3"
+                }else{
+                    return "4"
+                }
+            }
+        }else if (testR > 140 && testR <= 196){
+            //可能是1V2V3
+            if(testR < 146){
+                return "3"
+            }else if(testR >= 146 && testR <= 176){
+                //可能是1V3
+                if(testG <= 88){
+                    return "3"
+                }else if(testG > 88 && testG < 100){
+                    if(testB < 80){
+                        return "1"
+                    }else{
+                        return "3"
+                    }
+                }else{ //大於100
+                    return "1"
+                }
+            }else{//176-196
+                //可能是1V2V3
+                if(testG > 106){
+                    return "1"
+                }else if(testG <= 106 && testG > 100){
+                    return "3"
+                }else if(testG <= 100 && testG > 88 ){
+                    //可能是2V3
+                    if(testB < 108){
+                        return "2"
+                    }else{
+                        return "3"
+                    }
+                }else{ //小於88
+                    return "3"
+                }
+            }
+        }else{ //大於196
+            //可能是1V2
+            if (testR > 196 && testR <= 212) {
+                //可能是1或2
+                if (testG < 140){
+                    return "2"
+                }else{
+                    return "1"
+                }
+                
+            }else{ //大於212
+                return "2"
+            }
+        }
     }
     
     func getLightResult(numberR:Int, numberG:Int, numberB:Int) -> String {
@@ -332,14 +524,4 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         return "end"
     }
-    
-    
 }
-//
-//fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-//    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
-//}
-//
-//fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-//    return input.rawValue
-//}
