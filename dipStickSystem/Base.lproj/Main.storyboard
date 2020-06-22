@@ -251,6 +251,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mAz-9L-dZ4" userLabel="average">
+                                <rect key="frame" x="40" y="683" width="56" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -258,6 +262,7 @@
                     <navigationItem key="navigationItem" id="dbS-rM-ugH"/>
                     <connections>
                         <outlet property="averageLabel" destination="wtT-QC-Nyk" id="gLs-Ex-m0N"/>
+                        <outlet property="averageView" destination="mAz-9L-dZ4" id="ghR-C7-QCb"/>
                         <outlet property="colorLabel" destination="JOJ-3V-aGe" id="NTW-py-rHq"/>
                         <outlet property="colorView" destination="sUA-3d-dyb" id="cwa-G2-Te3"/>
                         <outlet property="imageView" destination="3ZN-Qg-gNA" id="tHj-C0-6IK"/>

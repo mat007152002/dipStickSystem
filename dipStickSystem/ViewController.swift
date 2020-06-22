@@ -22,6 +22,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var paletteLabels: [UILabel]!
     @IBOutlet weak var resultLabel: UILabel!
     @IBOutlet weak var averageLabel: UILabel!
+    @IBOutlet weak var averageView: UIView!
     
     
     override func viewDidLoad() {
@@ -39,7 +40,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func chooseLogic(logic:Int, NumberR:Int, NumberG:Int, NumberB:Int) -> String { //根據環境選擇Light(預設)或Dark
            switch logic {
            case 0:
-               return getAverageResult2(numberR: NumberR, numberG: NumberG, numberB: NumberB)
+               return getKetoneResult(numberR: NumberR, numberG: NumberG, numberB: NumberB)
            case 1:
                return getAverageResult3(numberR: NumberR, numberG: NumberG, numberB: NumberB)
            default:
@@ -82,9 +83,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 self?.colorView.backgroundColor = dominantColor.makeUIColor()
                 self?.colorLabel.text = "getColor R\(dominantColor.r) G\(dominantColor.g) B\(dominantColor.b)"
                 //let convertResult = self?.convertInt8ToInt(color: dominantColor)
-                let a = self?.getAverageLighterColor(colors: colors)
-                let b = self?.getAverageColor(colors: colors)
-                self?.averageLabel.text = "get Average R\(b?.0 ?? 0) G\(b?.1 ?? 0) B\(b?.2 ?? 0)"
+                let a = self?.getAverageFiveColor(colors: colors)
+                //let b = self?.getAverageColor(colors: colors)
+                self?.averageLabel.text = "get Average R\(a?.0 ?? 0) G\(a?.1 ?? 0) B\(a?.2 ?? 0)"
+                self?.averageView.backgroundColor = UIColor(red: CGFloat(a!.0)/255, green: CGFloat(a!.1)/255, blue: CGFloat(a!.2)/255, alpha: 1)
                 self?.resultLabel.text = self?.chooseLogic(logic: self?.segmentIndex ?? 0, NumberR: a!.0, NumberG: a!.1, NumberB: a!.2)
             }
         }
@@ -123,7 +125,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return (0, 0, 0)
     }
     
-    func getAverageLighterColor(colors:[MMCQ.Color]?) -> (NumberR:Int, NumberG:Int, NumberB:Int) {
+    func getAverageFiveColor(colors:[MMCQ.Color]?) -> (NumberR:Int, NumberG:Int, NumberB:Int) {
         
         var colorsInt = [(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0),(0,0,0)]
         var colorsIntSum = [0,0,0,0,0,0,0,0,0]
@@ -154,7 +156,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         chosenColor[3] = colorsInt[indexOf4!]
         print(chosenColor[3])
         chosenColor[4] = colorsInt[indexOf5!]
-        print(chosenColor[4])
+        print(chosenColor[4
+            ])
         
         for i in 0 ..< 5 {
             averageColor[0] = averageColor[0] + chosenColor[i].0
@@ -188,6 +191,77 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let resultB = averageColor[2]/colorsInt.count
         
         return (resultR, resultG, resultB)
+    }
+    
+    func getKetoneResult(numberR:Int, numberG:Int, numberB:Int) -> String {
+        let testR = numberR
+        let testG = numberG
+        let testB = numberB
+        
+        if (testR < 96){
+            return "5"
+        }else if (testR <= 106 && testR >= 96){
+            //可能是4V5
+            return "X"
+        }else if (testR > 106 && testR < 128){
+            return "4"
+        }else if (testR >= 128 && testR <= 131){
+            //可能是3V4
+            if (testB > 84){
+                return "4"
+            }else{
+                return "3"
+            }
+        }else if (testR > 131 && testR < 149){
+            return "3"
+        }else if (testR >= 149 && testR <= 161){
+            //可能是2V3
+            if (testG < 80){
+                return "3"
+            }else if (testG <= 81 && testG >= 80){
+                if(testR < 94){
+                    return "2"
+                }else{
+                    return "3"
+                }
+            }else{
+                return "2"
+            }
+        }else if (testR > 161 && testR <= 176){
+            //可能是1V2V3
+            if (testG < 87){
+                return "3"
+            }else if (testG >= 87 && testG <= 95){
+                //可能是2V3
+                return "X"
+            }else if(testG > 95 && testG <= 98){
+                return "3"
+            }else if(testG > 98 && testG < 114){
+                //可能是1V3
+                if (testB < 111) {
+                    return "1"
+                }else {
+                    return "3"
+                }
+            }else {
+                return "1"
+            }
+        }else if (testR > 174 && testR <= 214){
+            //可能是1V2
+            if (testG < 111){
+                return "2"
+            }else if( testG <= 128 && testG >= 111){
+                if (testB <= 114){
+                    return "1"
+                }else {
+                    return "2"
+                }
+            }else {
+                return "1"
+            }
+        }else{
+            return "2"
+        }
     }
     
     func getAverageResult3(numberR:Int, numberG:Int, numberB:Int) -> String {
