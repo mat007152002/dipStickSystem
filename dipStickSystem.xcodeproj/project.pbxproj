@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		531CCD52F621D3AFC6377449 /* Pods_dipStickSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93FED15C04644A7358A2E289 /* Pods_dipStickSystem.framework */; };
+		DD71B2A624B2EB650014DFC6 /* colorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD71B2A524B2EB650014DFC6 /* colorTest.swift */; };
 		DD845E75249869B30034CB9A /* MainPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD845E74249869B30034CB9A /* MainPageVC.swift */; };
 		DD845E7724986A3B0034CB9A /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD845E7624986A3B0034CB9A /* CameraVC.swift */; };
 		DDA2DB552497162900E5AFAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2DB542497162900E5AFAC /* AppDelegate.swift */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		1DBFE1AB047486B405434D54 /* Pods-dipStickSystem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dipStickSystem.debug.xcconfig"; path = "Target Support Files/Pods-dipStickSystem/Pods-dipStickSystem.debug.xcconfig"; sourceTree = "<group>"; };
 		93FED15C04644A7358A2E289 /* Pods_dipStickSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_dipStickSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD71B2A524B2EB650014DFC6 /* colorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorTest.swift; sourceTree = "<group>"; };
 		DD845E74249869B30034CB9A /* MainPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageVC.swift; sourceTree = "<group>"; };
 		DD845E7624986A3B0034CB9A /* CameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
 		DDA2DB512497162900E5AFAC /* dipStickSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dipStickSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +91,7 @@
 				DD845E74249869B30034CB9A /* MainPageVC.swift */,
 				DD845E7624986A3B0034CB9A /* CameraVC.swift */,
 				DDA2DB582497162900E5AFAC /* ViewController.swift */,
+				DD71B2A524B2EB650014DFC6 /* colorTest.swift */,
 				DDA2DB5A2497162900E5AFAC /* Main.storyboard */,
 				DDA2DB5D2497162B00E5AFAC /* Assets.xcassets */,
 				DDA2DB5F2497162B00E5AFAC /* LaunchScreen.storyboard */,
@@ -213,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDA2DB592497162900E5AFAC /* ViewController.swift in Sources */,
+				DD71B2A624B2EB650014DFC6 /* colorTest.swift in Sources */,
 				DDA2DB552497162900E5AFAC /* AppDelegate.swift in Sources */,
 				DD845E7724986A3B0034CB9A /* CameraVC.swift in Sources */,
 				DD845E75249869B30034CB9A /* MainPageVC.swift in Sources */,

@@ -24,11 +24,8 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var capturedImageView: UIImageView!
     @IBOutlet weak var cameraActionView: UIView!
-    @IBOutlet weak var choosePhotoActionView: UIView!
-    
-    @IBOutlet weak var photoSaveButton: UIButton!
-    @IBOutlet weak var photoCancelButton: UIButton!
     @IBOutlet weak var cameraButton: UIButton!
+     @IBOutlet weak var countLabel: UILabel!
     
     var croppedImageView = UIImageView()
     var cropImageRect = CGRect()
@@ -38,11 +35,16 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     var captureSession: AVCaptureSession!
     var stillImageOutput: AVCapturePhotoOutput!
     var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+   
+    
+    var testingFrequency: Int = 10
+    var testingCount: Int = 0
+    var colorObjects = [colorTest]()
+    var ColorResult = [(Int,Int,Int)](repeating: (0,0,0), count: 5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,7 +76,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.captureSession.stopRunning()
-        previewViewLayerMode(image: nil, isCameraMode: true)
     }
     
     
@@ -111,37 +112,141 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     }
     
     func previewViewLayerMode(image: UIImage?, isCameraMode: Bool) {
-        if isCameraMode {
-            self.captureSession.startRunning()
-            
-            cameraActionView.isHidden = false
-            choosePhotoActionView.isHidden = true
-            
-            previewView.isHidden = false
-            capturedImageView.isHidden = true
-        } else {
-            self.captureSession.stopRunning()
-            cameraActionView.isHidden = true
-            choosePhotoActionView.isHidden = false
-            
-            previewView.isHidden = true
-            capturedImageView.isHidden = false
-            
-            // Original image to blureffect
-            let blurEffect = UIBlurEffect(style: .light)
-            let blurView = UIVisualEffectView(effect: blurEffect)
-            blurView.frame = capturedImageView.bounds
-            capturedImageView.addSubview(blurView)
-            
-            // Crop guide Image
-            croppedImageView = UIImageView(image: image!)
-            croppedImageView.center = CGPoint(x:capturedImageView.frame.width/2, y:capturedImageView.frame.height/2)
-            croppedImageView.frame = cropImageRect
-            croppedImageView.roundCorners(cropImageRectCorner, radius: 10)
-            capturedImageView.addSubview(croppedImageView)
-        }
+               if isCameraMode {
+                   self.captureSession.startRunning()
+                   
+                   cameraActionView.isHidden = false
+                   
+                   previewView.isHidden = false
+                   capturedImageView.isHidden = true
+               } else {
+                   self.captureSession.stopRunning()
+                   cameraActionView.isHidden = false//決定拍攝後是否隱藏攝影按鈕
+                   
+                   previewView.isHidden = true
+                   capturedImageView.isHidden = false
+        
+                   // Crop guide Image
+                   croppedImageView = UIImageView(image: image!)
+                   croppedImageView.center = CGPoint(x:capturedImageView.frame.width/2, y:capturedImageView.frame.height/2)
+                   croppedImageView.frame = cropImageRect
+                   //croppedImageView.roundCorners2(cropImageRectCorner, radius: 10)
+                   capturedImageView.addSubview(croppedImageView)
+                   
+                   let colorObject = colorTest(image: croppedImageView.image!)
+                   
+               
+                   colorObjects.append(colorObject)
+                   //self.cropedImageViews[self.testingCount].image = self.croppedImageView.image! //將擷取的畫面呈現在imageView
+                   testingCount += 1
+                
+                self.countLabel.text = "\(testingCount)"
+                   
+                   print("已完成\(testingCount)次")
+                   
+               if(testingCount == testingFrequency){
+                       print("本試紙辨識已全部完成！")
+                
+                ColorResult[0] = getColor(colorObjects: colorObjects)
+                ColorResult[1] = getAverageAllColor(colorObjects: colorObjects)
+                ColorResult[2] = getMiddleColor(colorObjects: colorObjects)
+                ColorResult[3] = getLighterColor(colorObjects: colorObjects)
+                ColorResult[4] = getDarkerColor(colorObjects: colorObjects)
+                   
+                let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
+                
+                VC.colorResult = ColorResult
+                
+                self.navigationController?.pushViewController(VC, animated: true)//puch to ViewController
+                   
+                cleanResult()
+                
+                   }
+               
+                   previewViewLayerMode(image: nil, isCameraMode: true)
+
+               }
     }
     
+    func getColor(colorObjects:[colorTest]) -> (Int,Int,Int){
+        
+        var totalR = 0
+        var totalG = 0
+        var totalB = 0
+        
+        for i in 0..<colorObjects.count{
+            totalR += colorObjects[i].dominateColor.0
+            totalG += colorObjects[i].dominateColor.1
+            totalB += colorObjects[i].dominateColor.2
+        }
+        
+        return (totalR/10,totalG/10,totalB/10)
+    }
+    
+    func getAverageAllColor(colorObjects:[colorTest]) -> (Int,Int,Int){
+        var totalR = 0
+        var totalG = 0
+        var totalB = 0
+        
+        for i in 0..<colorObjects.count{
+            totalR += colorObjects[i].AverageAllColor.0
+            totalG += colorObjects[i].AverageAllColor.1
+            totalB += colorObjects[i].AverageAllColor.2
+        }
+        
+        return (totalR/10,totalG/10,totalB/10)
+    }
+    
+    func getMiddleColor(colorObjects:[colorTest]) -> (Int,Int,Int){
+        var totalR = 0
+        var totalG = 0
+        var totalB = 0
+        
+        for i in 0..<colorObjects.count{
+            totalR += colorObjects[i].AverageMiddleColor.0
+            totalG += colorObjects[i].AverageMiddleColor.1
+            totalB += colorObjects[i].AverageMiddleColor.2
+        }
+        
+        return (totalR/10,totalG/10,totalB/10)
+    }
+    
+    func getLighterColor(colorObjects:[colorTest]) -> (Int,Int,Int){
+        var totalR = 0
+        var totalG = 0
+        var totalB = 0
+        
+        for i in 0..<colorObjects.count{
+            totalR += colorObjects[i].AverageLighterColor.0
+            totalG += colorObjects[i].AverageLighterColor.1
+            totalB += colorObjects[i].AverageLighterColor.2
+        }
+        
+        return (totalR/10,totalG/10,totalB/10)
+    }
+    
+    func getDarkerColor(colorObjects:[colorTest]) -> (Int,Int,Int){
+        var totalR = 0
+        var totalG = 0
+        var totalB = 0
+        
+        for i in 0..<colorObjects.count{
+            totalR += colorObjects[i].AverageDarkerColor.0
+            totalG += colorObjects[i].AverageDarkerColor.1
+            totalB += colorObjects[i].AverageDarkerColor.2
+        }
+        
+        return (totalR/10,totalG/10,totalB/10)
+    }
+    
+    func cleanResult() {
+        testingCount = 0
+        self.countLabel.text = "0"
+        colorObjects.removeAll()
+//        for i in 0...14{
+//        cropedImageViews[i].image = nil//辨識結束清除ImageView中的圖片
+//        }
+    }
     
     /*
     // MARK: - Navigation
@@ -191,28 +296,24 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     // MARK: - @IBAction
     @IBAction func actionCameraCapture(_ sender: AnyObject) {
         
-        // Istance of AVCapturePhotoSettings class
         var photoSettings: AVCapturePhotoSettings
-        
+                
         photoSettings = AVCapturePhotoSettings.init(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
-//        photoSettings.isAutoStillImageStabilizationEnabled = true
-//        photoSettings.flashMode = .auto
         
-        // AVCapturePhotoCaptureDelegate
         stillImageOutput.capturePhoto(with: photoSettings, delegate: self)
     }
     
-    @IBAction func savePhotoPressed(_ sender: Any) {
-        
-        let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
-        
-        VC.image = croppedImageView.image!
-        VC.segmentIndex = ParentSegmentIndex
-        
-        self.navigationController?.pushViewController(VC, animated: true)//puch to ViewController
-        
-        //        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil) //目前沒用到儲存功能
-    }
+//    @IBAction func savePhotoPressed(_ sender: Any) {
+//
+//        let VC = storyboard?.instantiateViewController(identifier: "ViewController") as! ViewController
+//
+//        VC.image = croppedImageView.image!
+//        VC.segmentIndex = ParentSegmentIndex
+//
+//        self.navigationController?.pushViewController(VC, animated: true)//puch to ViewController
+//
+//        //        UIImageWriteToSavedPhotosAlbum(croppedImageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil) //目前沒用到儲存功能
+//    }
     @IBAction func mySegmentControl(_ sender: UISegmentedControl) {
         if (sender.selectedSegmentIndex == 0){
             ParentSegmentIndex = 0
